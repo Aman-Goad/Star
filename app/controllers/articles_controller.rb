@@ -19,8 +19,9 @@ before_action :set_article, only:[:edit,:update,:show,:destroy]
    def create  
     @article = Article.new(article_params)
     #render plain: @article.inspect
-
+    @article.user = User.first
        if @article.save
+       
          flash[:notice] = "Article was created Successfully"
            redirect_to @article
           else

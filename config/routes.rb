@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :users
+  resources :create_users
+  #resources :users
   root 'articles#index'
   get '/articles', to: 'articles#index'
   resources :login_forms
