@@ -1,2 +1,0 @@
-class LoginForm < ApplicationRecord
-end
