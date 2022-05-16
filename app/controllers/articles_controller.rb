@@ -41,8 +41,9 @@ before_action :set_article, only:[:edit,:update,:show,:destroy]
 
    def destroy
      @article = Article.find(params[:id])
+     byebug
      @article.destroy
-     redirect_to articles_path status: :see_other
+     redirect_to articles_path 
 
    end
 
