@@ -1,5 +1,7 @@
 class ArticlesController < ApplicationController
 before_action :set_article, only:[:edit,:update,:show,:destroy]
+before_action :require_user, except:[:show, :index]
+before_action :require_same_user, only: [:edit, :update , :destroy]
    def show
     @article = Article.find(params[:id])
    end
@@ -45,7 +47,6 @@ before_action :set_article, only:[:edit,:update,:show,:destroy]
 
    def destroy
      @article = Article.find(params[:id])
-     byebug
      @article.destroy
      redirect_to articles_path 
 
@@ -57,6 +58,14 @@ before_action :set_article, only:[:edit,:update,:show,:destroy]
    end
 
    def article_params
-   (params.require(:article).permit(:title, :description))
+   params.require(:article).permit(:title, :description)
+   end
+
+   def require_same_user
+      if current_user != @article.user && !current_user.admin?
+         flash[:alert] = "You can only edit or delete your own Article"
+         redirect_to @article
+      end
+
    end
 end
